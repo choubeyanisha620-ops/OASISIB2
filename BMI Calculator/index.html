@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart BMI | AI Health Assistant</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- BoxIcons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    
+    <div id="toast-container"></div>
+
+    <div class="app-container">
+        <!-- 1. Top Header -->
+        <header class="app-header">
+            <div class="title-area">
+                <h1>Smart BMI</h1>
+                <p>AI Health Assistant</p>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme">
+                    <i class='bx bx-sun'></i>
+                </button>
+                <div class="profile-icon">
+                    <i class='bx bx-user'></i>
+                </div>
+            </div>
+        </header>
+
+        <div class="scroll-content">
+            <!-- 2. Main Card (Input Section) -->
+            <section class="glass-card main-input-card fade-in">
+                <div class="input-group">
+                    <i class='bx bx-user-circle input-icon'></i>
+                    <input type="text" id="name" placeholder="Name" autocomplete="off">
+                </div>
+                
+                <div class="row">
+                    <div class="input-group half">
+                        <i class='bx bx-calendar input-icon'></i>
+                        <input type="number" id="age" placeholder="Age" min="1">
+                    </div>
+                    <div class="input-group half">
+                        <i class='bx bx-male-sign input-icon'></i>
+                        <select id="gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <i class='bx bx-weight input-icon'></i>
+                    <input type="number" id="weight" placeholder="Weight (kg)">
+                    <button class="mic-btn inline-mic" data-target="weight" title="Speak Weight"><i class='bx bx-microphone'></i></button>
+                </div>
+
+                <div class="input-group">
+                    <i class='bx bx-ruler input-icon'></i>
+                    <input type="number" id="height" placeholder="Height (m)">
+                    <button class="mic-btn inline-mic" data-target="height" title="Speak Height"><i class='bx bx-microphone'></i></button>
+                </div>
+
+                <!-- 3. Primary Action Button -->
+                <button id="calculate-btn" class="primary-btn">
+                    <span>Calculate BMI</span>
+                    <i class='bx bx-right-arrow-alt'></i>
+                </button>
+            </section>
+
+            <!-- 4. Result Card (Dynamic) -->
+            <section id="result-section" class="glass-card result-card hidden fade-in">
+                <div class="result-header">
+                    <h2>Your Result</h2>
+                </div>
+                <div class="bmi-display">
+                    <span id="bmi-value">0.0</span>
+                </div>
+                <div id="bmi-category" class="category-badge">Unknown</div>
+                
+                <div class="ai-advice">
+                    <i class='bx bx-bulb'></i>
+                    <p id="ai-advice-text">Waiting for calculation...</p>
+                </div>
+            </section>
+
+            <!-- 5. Dashboard Section -->
+            <section class="dashboard-section fade-in">
+                <h3>Dashboard</h3>
+                <div class="dashboard-grid">
+                    <div class="dash-card glass-card">
+                        <i class='bx bx-group'></i>
+                        <div class="dash-info">
+                            <span class="dash-value" id="dash-users">0</span>
+                            <span class="dash-label">Users Processed</span>
+                        </div>
+                    </div>
+                    <div class="dash-card glass-card">
+                        <i class='bx bx-stats'></i>
+                        <div class="dash-info">
+                            <span class="dash-value" id="dash-avg">0.0</span>
+                            <span class="dash-label">Average BMI</span>
+                        </div>
+                    </div>
+                    <div class="dash-card glass-card">
+                        <i class='bx bx-time-five'></i>
+                        <div class="dash-info">
+                            <span class="dash-value" id="dash-last">N/A</span>
+                            <span class="dash-label">Last Result</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Graph Section -->
+            <section class="graph-section glass-card fade-in">
+                <h3>BMI History</h3>
+                <div class="chart-container">
+                    <canvas id="bmiChart"></canvas>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- 7. Voice Assistant UI -->
+    <button id="floating-mic" class="floating-voice-btn" aria-label="Smart Voice Assistant">
+        <i class='bx bx-microphone'></i>
+    </button>
+    <div id="voice-pulse" class="pulse-ring hidden"></div>
+    <div id="voice-overlay" class="voice-overlay hidden">
+        <div class="voice-modal">
+            <div class="voice-waves">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p id="voice-status-text">Listening...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
